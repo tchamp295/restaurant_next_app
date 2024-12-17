@@ -20,47 +20,47 @@ const Price = ({ price, id, options }: Props) => {
   }, [quantity, selected, options, price]);
 
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="text-2xl font-bold">${total.toFixed(2)}</h2>
-      {/* OPTIONS CONTAINER */}
-      <div className="flex gap-4">
-        {options?.map((option, index) => (
-          <button
-            key={option.title}
-            className="min-w-[6rem] p-2 ring-1 ring-red-400 rounded-md"
-            style={{
-              background: selected === index ? "rgb(248 113 113)" : "white",
-              color: selected === index ? "white" : "red",
-            }}
-            onClick={() => setSelected(index)}
-          >
-            {option.title}
-          </button>
-        ))}
-      </div>
-      {/* QUANTITY AND ADD BUTTON CONTAINER */}
-      <div className="flex justify-between items-center">
-        {/* QUANTITY */}
-        <div className="flex justify-between w-full p-3 ring-1 ring-red-500">
-          <span>Quantity</span>
-          <div className="flex gap-4 items-center">
+    <div className="flex flex-col gap-6">
+      {/* Total Price */}
+      <h2 className="text-3xl font-bold text-gray-800">${total.toFixed(2)}</h2>
+
+      {/* Options Container */}
+      {options?.length && (
+        <div className="flex gap-4">
+          {options.map((option, index) => (
             <button
-              onClick={() => setQuantity((prev) => (prev > 1 ? prev - 1 : 1))}
+              key={option.title}
+              className={`min-w-[6rem] p-2 rounded-md ${
+                selected === index
+                  ? "bg-red-500 text-white"
+                  : "bg-white text-red-500"
+              } border border-red-500 transition-colors duration-300`}
+              onClick={() => setSelected(index)}
             >
-              {"<"}
+              {option.title}
             </button>
-            <span>{quantity}</span>
-            <button
-              onClick={() => setQuantity((prev) => (prev < 9 ? prev + 1 : 9))}
-            >
-              {">"}
-            </button>
-          </div>
+          ))}
         </div>
-        {/* CART BUTTON */}
-        <button className="uppercase w-56 bg-red-500 text-white p-3 ring-1 ring-red-500">
-          Add to Cart
-        </button>
+      )}
+
+      {/* Quantity Container */}
+      <div className="flex justify-between items-center ring-1 ring-red-500 p-3 rounded-md">
+        <span className="text-lg font-semibold">Quantity</span>
+        <div className="flex gap-4 items-center">
+          <button
+            onClick={() => setQuantity((prev) => (prev > 1 ? prev - 1 : 1))}
+            className="text-xl font-bold text-red-500"
+          >
+            {"<"}
+          </button>
+          <span className="text-xl">{quantity}</span>
+          <button
+            onClick={() => setQuantity((prev) => (prev < 9 ? prev + 1 : 9))}
+            className="text-xl font-bold text-red-500"
+          >
+            {">"}
+          </button>
+        </div>
       </div>
     </div>
   );
